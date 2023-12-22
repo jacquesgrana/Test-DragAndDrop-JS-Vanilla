@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop Table</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="jsonService.js" defer></script>
+    <script src="index.js" defer></script>
+  </head>
+  <body>
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Id</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody
+        id="dropZone"
+        class="droppable"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      >
+      </tbody>
+    </table>
+  </body>
+</html>

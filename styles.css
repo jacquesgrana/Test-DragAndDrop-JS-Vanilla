@@ -1,0 +1,30 @@
+table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 20px;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  .draggable {
+    cursor: move;
+  }
+
+  tbody.droppable {
+    /*border: 2px dashed #aaaaaa;*/
+    background-color: #f9f9f9;
+  }
+
+  .dragging {
+    cursor: drag;
+    background-color: cadetblue !important;
+  }

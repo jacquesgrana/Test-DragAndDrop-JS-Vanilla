@@ -1,0 +1,1 @@
+### Test drag-and-drop en javascript vanilla
