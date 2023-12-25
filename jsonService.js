@@ -36,7 +36,7 @@ const applyRanksUpdates = async (updates) => {
         //console.log('Updating rank:', update);
         try {
             const result = await patchRank(update.id, update.rank);
-            console.log('Rank updated successfully:', result);
+            //console.log('Rank updated successfully:', result);
         } catch (error) {
             console.error('Error updating rank:', error);
             throw error;  // Rethrow the error to handle it elsewhere if needed
