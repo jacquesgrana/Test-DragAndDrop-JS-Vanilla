@@ -8,6 +8,12 @@ init();
 async function init() {
   persons = await getAll();
   datas_nb = persons.length;
+  //console.table(persons);
+  /*
+  persons.forEach((person) => {
+    const color = `rgb(${Math.floor(Math.random() * 128 + 127)}, ${Math.floor(Math.random() * 128 + 127)}, ${Math.floor(Math.random() * 128 + 127)})`;
+    person.color = color;
+  })*/
   renderTable();
 }
 
@@ -29,16 +35,16 @@ document.addEventListener("dragstart", function (event) {
  */
 
 function handleDragStart(event) {
+  console.log("dragstart");
   dragged = event.target.closest("tr"); // Trouve l'élément <tr> parent
   dragged.style.opacity = 0.25;
-  dragged.classList.add("dragging");
+  //dragged.classList.add("dragging");
   draggedHeight = dragged.getBoundingClientRect().height;
+
+  event.target.classList.add('bg-color-orange');
 
   // Ajoute un attribut personnalisé pour indiquer le déplacement
   dragged.setAttribute("data-dragging", "true");
-
-  // Ajoutez le reste de votre logique de dragstart ici si nécessaire
-  console.log("Drag start from handler");
 
   // Définir l'effet de déplacement (move)
   event.dataTransfer.effectAllowed = "move";
@@ -58,9 +64,11 @@ document.addEventListener("dragend", function (event) {
   console.log("dragend");
   if (dragged) {
     dragged.style.opacity = 1.0;
-    dragged.classList.remove("dragging");
+    //dragged.classList.remove("dragging");
 
     dragged.removeAttribute("data-dragging");
+    event.target.classList.remove('bg-color-orange');
+    event.target.classList.add('bg-color-grey');
   }
 });
 
@@ -72,7 +80,6 @@ function allowDrop(event) {
 async function drop(event) {
   console.log("drop");
   event.preventDefault();
-  //event.stopPropagation();
   let dropTarget = event.target;
 
   while (dropTarget.tagName !== "TBODY") {
@@ -82,7 +89,6 @@ async function drop(event) {
   dropTarget.style.backgroundColor = "";
 
   if (dropTarget.tagName === "TBODY") {
-    //setTimeout(async function () {
     dragged.parentNode.removeChild(dragged);
     let rect = dropTarget.getBoundingClientRect();
     let mouseY = event.clientY;
@@ -111,7 +117,7 @@ async function drop(event) {
     } 
     else {
       let insertIndex = -1;
-      // Find the index to insert in the persons array
+      // Find the index to insert in the perxsons array
       for (var i = 0; i < dropTarget.children.length; i++) {
         var childRect = dropTarget.children[i].getBoundingClientRect();
         if (childRect.top > mouseY) {
@@ -125,7 +131,9 @@ async function drop(event) {
         dropTarget.appendChild(dragged);
         persons.push(dataToInsert);
         changeIndicator("purple" ,"insertion par le bas");
-      } else {
+      } 
+      // insertion 'courante'
+      else {
         dropTarget.insertBefore(dragged, dropTarget.children[insertIndex]);
         persons.splice(insertIndex, 0, dataToInsert);
         changeIndicator("orange" ,"insertion normale");
@@ -136,7 +144,6 @@ async function drop(event) {
 
     await generateRanks();
     renderTable();
-    //}, 100); // 100ms delay
   }
 }
 
@@ -210,8 +217,9 @@ function renderTable() {
   tBodyElt.innerHTML = "";
   const sortedTable = persons.slice().sort((a, b) => a.rank - b.rank);
   sortedTable.forEach((element) => {
+    //console.log('element :', element);
     tBodyElt.innerHTML +=
-      `<tr draggable="false" class="draggable" data-id="${element.id}">` +
+      `<tr draggable="false" class="draggable" data-id="${element.id}" style="background-color: ${element.color};">` +
       "<td>" +
       element.rank +
       "</td>" +
@@ -228,7 +236,7 @@ function renderTable() {
       element.email +
       "</td>" +
       "<td>" +
-      "<span draggable='true' class='handler' ></span>" +
+      "<span draggable='true' class='handler' >⇳</span>" +
       "</td>" +
       "</tr>";
   });

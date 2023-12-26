@@ -2,73 +2,83 @@
   "persons": [
     {
       "id": 1,
-      "rank": 8,
+      "rank": 9,
       "firstname": "John",
       "lastname": "Doe",
-      "email": "john@example.com"
+      "email": "john@example.com",
+      "color": "rgb(255, 204, 204)"
     },
     {
       "id": 2,
       "rank": 6,
       "firstname": "Jane",
       "lastname": "Doette",
-      "email": "jane@example.com"
+      "email": "jane@example.com",
+      "color": "rgb(204, 255, 204)"
     },
     {
       "id": 3,
-      "rank": 4,
+      "rank": 8,
       "firstname": "Joe",
       "lastname": "Doer",
-      "email": "joe@example.com"
+      "email": "joe@example.com",
+      "color": "rgb(204, 204, 255)"
     },
     {
       "id": 4,
       "rank": 3,
       "firstname": "Johanna",
       "lastname": "Doet",
-      "email": "johanna@example.com"
+      "email": "johanna@example.com",
+      "color": "rgb(255, 230, 204)"
     },
     {
       "id": 5,
-      "rank": 7,
+      "rank": 5,
       "firstname": "Johannes",
       "lastname": "Doex",
-      "email": "johannes@example.com"
+      "email": "johannes@example.com",
+      "color": "rgb(230, 255, 204)"
     },
     {
       "id": 6,
-      "rank": 9,
+      "rank": 4,
       "firstname": "Markus",
       "lastname": "Doex",
-      "email": "markus@example.com"
+      "email": "markus@example.com",
+      "color": "rgb(204, 255, 230)"
     },
     {
       "id": 7,
-      "rank": 5,
+      "rank": 7,
       "firstname": "Mark",
       "lastname": "Doech",
-      "email": "mark@example.com"
+      "email": "mark@example.com",
+      "color": "rgb(230, 204, 255)"
     },
     {
       "id": 8,
       "rank": 10,
       "firstname": "Daniel",
       "lastname": "Doep",
-      "email": "daniel@example.com"
+      "email": "daniel@example.com",
+      "color": "rgb(255, 255, 204)"
     },
     {
       "id": 9,
-      "rank": 2,
+      "rank": 1,
       "firstname": "Peter",
       "lastname": "Doev",
-      "email": "peter@example.com"
+      "email": "peter@example.com",
+      "color": "rgb(255, 204, 255)"
     },
     {
       "id": 10,
-      "rank": 1,
+      "rank": 2,
       "firstname": "James",
       "lastname": "Doez",
-      "email": "james@example.com"
+      "email": "james@example.com",
+      "color": "rgb(204, 200, 255)"
     }
   ]
 }
