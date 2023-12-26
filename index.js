@@ -11,12 +11,8 @@ async function init() {
   renderTable();
 }
 
-/*
-document.getElementById("dropZone").addEventListener("drop", function (event) {
-    drop(event);
-});
-*/
 
+/*
 document.addEventListener("dragstart", function (event) {
   console.log("dragstart");
   dragged = event.target;
@@ -25,12 +21,46 @@ document.addEventListener("dragstart", function (event) {
   draggedHeight = dragged.getBoundingClientRect().height;
   //console.log('hauteur : ', dragged.getBoundingClientRect().height);
 });
+*/
+
+/**
+ * Pour la poignée
+ * @param {Event} event 
+ */
+
+function handleDragStart(event) {
+  dragged = event.target.closest("tr"); // Trouve l'élément <tr> parent
+  dragged.style.opacity = 0.25;
+  dragged.classList.add("dragging");
+  draggedHeight = dragged.getBoundingClientRect().height;
+
+  // Ajoute un attribut personnalisé pour indiquer le déplacement
+  dragged.setAttribute("data-dragging", "true");
+
+  // Ajoutez le reste de votre logique de dragstart ici si nécessaire
+  console.log("Drag start from handler");
+
+  // Définir l'effet de déplacement (move)
+  event.dataTransfer.effectAllowed = "move";
+
+  // Stocker les données nécessaires pour le déplacement
+  event.dataTransfer.setData("text/html", dragged.innerHTML);
+  const rect = dragged.getBoundingClientRect();
+  event.dataTransfer.setDragImage(dragged, event.clientX - rect.left, event.clientY - rect.top)
+
+  // Empêcher que l'événement ne soit propagé aux parents
+  event.stopPropagation();
+}
+
+
 
 document.addEventListener("dragend", function (event) {
   console.log("dragend");
   if (dragged) {
     dragged.style.opacity = 1.0;
     dragged.classList.remove("dragging");
+
+    dragged.removeAttribute("data-dragging");
   }
 });
 
@@ -38,88 +68,6 @@ function allowDrop(event) {
   console.log("allowDrop");
   event.preventDefault();
 }
-/*
-function drop(event) {
-  console.log("drop");
-  event.preventDefault();
-  //event.stopPropagation();
-  let dropTarget = event.target;
-
-  while (dropTarget.tagName !== "TBODY") {
-    dropTarget = dropTarget.parentNode;
-  }
-
-  dropTarget.style.backgroundColor = "";
-
-  if (dropTarget.tagName === "TBODY") {
-    setTimeout(function () {
-      dragged.parentNode.removeChild(dragged);
-      let rect = dropTarget.getBoundingClientRect();
-      let mouseY = event.clientY;
-
-      // Find the corresponding data in the datas array
-      let dataIndex = parseInt(dragged.dataset.id);
-      let dataToInsert = null;
-      if (dataIndex !== -1) {
-        // Store the data to insert in a separate variable
-        dataToInsert = persons[dataIndex];
-        // Remove the data from its current position
-        persons.splice(dataIndex, 1);
-      }
-
-      // Insert before the element whose top is below mouseY
-      for (var i = 0; i < dropTarget.children.length; i++) {
-        var childRect = dropTarget.children[i].getBoundingClientRect();
-        if (childRect.top > mouseY) {
-          // Check if mouseY is exactly in the middle of the row
-          if (mouseY > childRect.top && mouseY < childRect.bottom) {
-            dropTarget.insertBefore(dragged, dropTarget.children[i]);
-            // Insert the data at the new position
-            //if (dataToInsert) {
-              persons.splice(i, 0, dataToInsert);
-            //}
-            generateRanks();
-            return;
-          } 
-          else {
-            dropTarget.insertBefore(dragged, dropTarget.children[i - 1]);
-            // Insert the data at the new position
-            //if (dataToInsert) {
-              persons.splice(i - 1, 0, dataToInsert);
-            //}
-            generateRanks();
-            return;
-          }
-        }
-      }
-
-      /*
-      // If mouseY is below all elements, append the dragged element to the end
-      if (mouseY > rect.bottom) {
-        console.log("inserted at the end");
-        dropTarget.appendChild(dragged);
-        // Insert the data at the end of the datas array
-        if (dataToInsert) {
-          persons.push(dataToInsert);
-        }
-        //generateRanks();
-      } else if (mouseY < rect.top) {
-        // If mouseY is above all elements, insert at the beginning
-        console.log("inserted at the top");
-        dropTarget.insertBefore(dragged, dropTarget.firstChild);
-        // Insert the data at the beginning of the datas array
-        if (dataToInsert) {
-          persons.unshift(dataToInsert);
-        }
-        //generateRanks();
-      }
-      generateRanks();
-      */ /*
-      //generateRanks();
-    }, 100); // 100ms delay
-  }
-  //console.log("drop result, datas : ", datas);
-}*/
 
 async function drop(event) {
   console.log("drop");
@@ -217,6 +165,8 @@ async function generateRanks() {
   await applyRanksUpdates(updates);
 }
 
+
+
 function removeIndicatorBgColors(element) {
   const classList = element.classList;
   const bgColors = [
@@ -261,7 +211,7 @@ function renderTable() {
   const sortedTable = persons.slice().sort((a, b) => a.rank - b.rank);
   sortedTable.forEach((element) => {
     tBodyElt.innerHTML +=
-      `<tr draggable="true" class="draggable" data-id="${element.id}">` +
+      `<tr draggable="false" class="draggable" data-id="${element.id}">` +
       "<td>" +
       element.rank +
       "</td>" +
@@ -277,6 +227,11 @@ function renderTable() {
       "<td>" +
       element.email +
       "</td>" +
+      "<td>" +
+      "<span draggable='true' class='handler' ></span>" +
+      "</td>" +
       "</tr>";
   });
+  document.querySelectorAll(".handler").forEach(e => e.addEventListener("dragstart", handleDragStart));
+
 }

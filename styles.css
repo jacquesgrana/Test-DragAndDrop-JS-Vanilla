@@ -20,7 +20,7 @@ table {
   }
 
   .draggable {
-    cursor: move;
+    user-select: none;
   }
 
   tbody.droppable {
