@@ -1,5 +1,9 @@
 const ENDPOINT = "http://localhost:5050/persons";
 
+/**
+ * Fonction qui récupère les données de la base
+ * @returns 
+ */
 const getAll = async () => {
     try {
         const response = await fetch(ENDPOINT, 
@@ -14,6 +18,12 @@ const getAll = async () => {
     }
 }
 
+/**
+ * Fonction qui met à jour le rang
+ * @param {*} id : id de l'objet à mettre à jour
+ * @param {*} newRank : nouveau rang
+ * @returns 
+ */
 const patchRank = async (id, newRank) => {
     
     try {
@@ -30,7 +40,10 @@ const patchRank = async (id, newRank) => {
     }
 }
 
-
+/**
+ * Fonction qui met à jour les rangs contenus dans le paramètre updates
+ * @param {*} updates : tableau d'objets contenant l'id et le nouveau rang
+ */
 const applyRanksUpdates = async (updates) => {
     for (const update of updates) {
         //console.log('Updating rank:', update);
