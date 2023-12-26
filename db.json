@@ -10,7 +10,7 @@
     },
     {
       "id": 2,
-      "rank": 6,
+      "rank": 5,
       "firstname": "Jane",
       "lastname": "Doette",
       "email": "jane@example.com",
@@ -26,7 +26,7 @@
     },
     {
       "id": 4,
-      "rank": 3,
+      "rank": 4,
       "firstname": "Johanna",
       "lastname": "Doet",
       "email": "johanna@example.com",
@@ -34,7 +34,7 @@
     },
     {
       "id": 5,
-      "rank": 5,
+      "rank": 6,
       "firstname": "Johannes",
       "lastname": "Doex",
       "email": "johannes@example.com",
@@ -42,7 +42,7 @@
     },
     {
       "id": 6,
-      "rank": 4,
+      "rank": 1,
       "firstname": "Markus",
       "lastname": "Doex",
       "email": "markus@example.com",
@@ -66,7 +66,7 @@
     },
     {
       "id": 9,
-      "rank": 1,
+      "rank": 2,
       "firstname": "Peter",
       "lastname": "Doev",
       "email": "peter@example.com",
@@ -74,7 +74,7 @@
     },
     {
       "id": 10,
-      "rank": 2,
+      "rank": 3,
       "firstname": "James",
       "lastname": "Doez",
       "email": "james@example.com",

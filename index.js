@@ -4,6 +4,9 @@ let draggedHeight = 0;
 //const MAX_DATAS = 10;
 let datas_nb = 0;
 
+/**
+ * Fonction d'initialisation, charge le tableau 'persons' et affiche le tableau
+ */
 init();
 async function init() {
   persons = await getAll();
@@ -30,10 +33,10 @@ document.addEventListener("dragstart", function (event) {
 */
 
 /**
- * Pour la poignée
+ * Fonction qui gère l'évènement dragstart et qui permet de déplacer l'element avec la poignée.
+ * Définit la variable 'dragged' qui représente la ligne du tableau qui est déplacée
  * @param {Event} event 
  */
-
 function handleDragStart(event) {
   console.log("dragstart");
   dragged = event.target.closest("tr"); // Trouve l'élément <tr> parent
@@ -52,6 +55,8 @@ function handleDragStart(event) {
   // Stocker les données nécessaires pour le déplacement
   event.dataTransfer.setData("text/html", dragged.innerHTML);
   const rect = dragged.getBoundingClientRect();
+
+  // Ajouter l'image
   event.dataTransfer.setDragImage(dragged, event.clientX - rect.left, event.clientY - rect.top)
 
   // Empêcher que l'événement ne soit propagé aux parents
@@ -59,7 +64,9 @@ function handleDragStart(event) {
 }
 
 
-
+/**
+ * Fonction qui gère l'évènement dragend, raz des styles et des attributs
+ */
 document.addEventListener("dragend", function (event) {
   console.log("dragend");
   if (dragged) {
@@ -72,11 +79,20 @@ document.addEventListener("dragend", function (event) {
   }
 });
 
+/**
+ * Fonction qui autorise le drop
+ * @param {Event} event 
+ */
 function allowDrop(event) {
   console.log("allowDrop");
   event.preventDefault();
 }
 
+/**
+ * Fonction qui gère l'évènement drop.
+ * Trois types de drop : en haut, en bas et dans le tableau
+ * @param {*} event 
+ */
 async function drop(event) {
   console.log("drop");
   event.preventDefault();
@@ -143,10 +159,15 @@ async function drop(event) {
     //console.log('dragged height :', dragged.getBoundingClientRect().height);
 
     await generateRanks();
+    persons = await getAll();
     renderTable();
   }
 }
 
+/**
+ * Fonction qui génère les rangs selon l'ordre des lignes tableau (au format html)
+ * A la fin, appelle la fonction qui fait les requêtes de mise à jour des rangs
+ */
 async function generateRanks() {
   const tabHtml = document.getElementById("dropZone").children;
   //console.table(persons);
@@ -173,7 +194,10 @@ async function generateRanks() {
 }
 
 
-
+/**
+ * Fonction qui enleve des classes css pour le background de l'élement html
+ * @param {*} element 
+ */
 function removeIndicatorBgColors(element) {
   const classList = element.classList;
   const bgColors = [
@@ -187,6 +211,10 @@ function removeIndicatorBgColors(element) {
   });
 }
 
+/**
+ * Fonction qui enleve des classes css pour le texte de l'élement html
+ * @param {*} element 
+ */
 function removeIndicatorColors(element) {
   const classList = element.classList;
   const colors = [
@@ -199,7 +227,11 @@ function removeIndicatorColors(element) {
     classList.remove(bgColor);
   });
 }
-
+/**
+ * Fonction qui modifie l'indicateur
+ * @param {*} color 
+ * @param {*} text 
+ */
 function changeIndicator(color, text) {
   const indicator = document.getElementById("indicator");
   const indicatorText = document.getElementById("indicator-text");
@@ -211,6 +243,9 @@ function changeIndicator(color, text) {
   indicatorText.textContent = text;
 }
 
+/**
+ * Fonction qui affiche le tableau des personnes et met en place les listeners sur les poignées
+ */
 function renderTable() {
   console.log("renderTable");
   const tBodyElt = document.getElementById("dropZone");
